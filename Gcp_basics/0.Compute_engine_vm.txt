@@ -1,0 +1,9 @@
+1.congif your vm
+2.update apt -> sudo apt install update
+3.install pip3 -> sudo apt install python3-pip
+4.install all required packages 
+	pip3 install django
+5.upload your project
+6.update firewall rules for 80 port for ur instance
+7.run ur application at 80 port 
+

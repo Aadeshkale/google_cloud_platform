@@ -1,0 +1,60 @@
+Firebase Addind data into Cloud Firestore 
+____________________________________________
+Recquired packages and basic setup :-
+
+1) pip3 install firebase_admin
+2) setup firebase project, json key with appropriate permissions
+3) download json key 
+4) create collection with name sample
+
+-----------------------------------------------------------------------------------------------------------------------example script :-
+-----------------------------------------------------------------------------------------------------------------------
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+ 
+cred = credentials.Certificate('firebase.json') # passing valid credentials using valid service account
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
+res = db.collection('sample')   # selecting perticular collection         
+
+# reading data form collection -> documents -> information 
+docs = res.get()
+for doc in docs:
+    print('{} => {}'.format(doc.id, doc.to_dict()))
+
+# Addding new documents into collections  
+email=input('Enter Student email:')
+if res.document(email).get().exists:           # here we check document with email id is exist or not
+    print('Email is already tere')
+else:
+    name=input('Enter Student name:')
+    address=input('Enter Student address:')
+    doc=db.collection('sample').document(email) # here we passing email as document id for new document
+    doc.set({
+        'name':name,
+        'address':address,
+    })
+    print('Data added sucessfully :)')
+
+# Removing document from collections
+email=input('Enter Student email to delete :')
+if res.document(email).get().exists:
+    res.document(email).delete()
+    print('Data Deleted successfully :)')
+else:
+    print('Email is not there :(')
+
+# upadating documents for collection
+email=input('enter email for updation:')
+if res.document(email).get().exists:
+    doc=res.document(email)
+    name=input('enter new name:')
+    doc.update({
+        'name':name
+    })
+    print('Data updated successfully :)')
+else:
+    print('Email is not there :(')
+-----------------------------------------------------------------------------------------------------------------------

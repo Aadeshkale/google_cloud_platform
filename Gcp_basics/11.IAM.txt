@@ -1,0 +1,26 @@
+IAM :- Identity accesss management
+reference:- https://cloud.google.com/iam/
+_____________________________________________________________
+Setting permissions and roles using 
+	1) Google Account
+	2) Service Account 
+	3) google groups
+	4) Cloud identity / gsuit (organizationl level)
+-------------------------------------------------------------------------------------------------------------
+Different types of primitive roles 
+	1) viewer :- have read only access levels to resources
+	2) editor :- have read and write access levels to resources
+	3) owner :-  have read and write access + admin + loging and reporting levels to resources
+-------------------------------------------------------------------------------------------------------------
+Different ways to set roles and policies
+	1) GCP web UI
+	2) cloud shell --> by using gcloud utility
+	3) Rest API's
+-------------------------------------------------------------------------------------------------------------
+creating custom roles:-
+	1) goto IAM and Admin dashboard
+	2) select Roles and click on create role
+	3) Provide neccessary information like name,id,discription 
+	4) Add permissions click on create and done buttons 
+	5) Goto IAM and Admin dashboard assing this role to user using service account or any other method	
+-------------------------------------------------------------------------------------------------------------

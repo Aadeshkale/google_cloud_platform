@@ -1,0 +1,44 @@
+Access cloud storage data into bigquey 
+______________________________________
+
+reference :-https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv
+recquired packages:-
+	1) install os ( bydefault available )
+	2) install google-cloud-bigquery
+-------------------------------------------------------------------------------------------------------------------------------
+steps:-
+1) generate json key of your serveice account with Bigquery,Storage read,write permissions   
+2) set-up your GOOGLE_APPLICATION_CREDENTIALS envoinmental variable to that json key path
+	example,  
+	json_key=os.path.join(os.path.dirname(__file__),'bigq.json')
+	os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=json_key 
+--------------------------------------------------------------------------------------------------------------------------------------
+example script:-
+--------------------------------------------------------------------------------------------------------------------------------------
+import os
+from google.cloud import bigquery
+json_key=os.path.join(os.path.dirname(__file__),'bigq.json') 	# adding json key file path to OS
+os.environ['GOOGLE_APPLICATION_CREDENTIALS']=json_key		# setting GOOGLE_APPLICATION_CREDENTIALS envoinmental variable 
+							     	# to that json key path
+client = bigquery.Client(project='roversidegaedev')		# creating bigqury-client with project
+dataset_id = 'aadesh_learning'					# as we in same project so does not recquired to specify id's we use 
+								# name insted of it
+dataset_ref = client.dataset(dataset_id)			# selecting destination data set to write data  
+job_config = bigquery.LoadJobConfig()				
+job_config.autodetect = True
+job_config.skip_leading_rows = 1
+job_config.source_format = bigquery.SourceFormat.CSV		# The source format defaults to CSV, so the line below is optional
+uri = 'gs://sample-info/info.csv'                               # source storage uri to load data form it  
+load_job = client.load_table_from_uri(
+    uri,
+    dataset_ref.table('demo'),
+    job_config=job_config)  # API request
+print('Starting job {}'.format(load_job.job_id))
+
+load_job.result()  						# Waits for table load to complete.
+print('Job finished.')
+
+destination_table = client.get_table(dataset_ref.table('demo'))		# conformation message 
+print('Loaded {} rows.'.format(destination_table.num_rows))
+--------------------------------------------------------------------------------------------------------------------------------------
+

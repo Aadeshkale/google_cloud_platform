@@ -1,0 +1,18 @@
+""" 
+        INSERT INTO `sample.test` 
+        ( seq, name_first, name_last, age, street, city, state, zip, dollar, pick, date)
+        select 9982,'Sachin', 'Mane',23,'ramnager','pune','MH',431001,3625.22,'BLACK',cast('2019-03-14' as date)
+"""
+
+
+""" 
+       Delete From `sample.test` where seq=9982 
+""" 
+
+"""
+	UPDATE `sample.test` 
+	SET name_first  = "Shivam"
+	WHERE seq = 9982
+
+"""
+

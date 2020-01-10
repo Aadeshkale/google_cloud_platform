@@ -1,0 +1,46 @@
+Connect Django to mongodb
+_____________________________________________________________________________________________________________________
+1.Install mongodb community edition on your machine using followings commands(linux):-
+**reference :- https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+	> sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+	> echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo 		tee/etc/apt/sources.list.d/mongodb-org-4.0.list
+	> sudo apt-get update
+	> sudo apt-get install -y mongodb-org
+
+Start mongodb use following command:-
+	> sudo service mongod start
+
+Stop mongodb use following command:-
+	> sudo service mongod stop
+
+Restart mongodb use following command:-
+	> sudo service mongod restart
+
+start mongo client
+	> mongo
+---------------------------------------------------------------------------------------------------------------------
+2.install djongo package 
+**refrence:-https://djongo.readthedocs.io/docs/get-started/
+
+3.create mongo database using:-
+	> use DATABASE_NAME
+4.create django project
+
+5.make neccessary changes in settings.py as follows:-
+	DATABASES = {
+	      'default': {
+		  'ENGINE': 'djongo',
+		  'NAME': 'your-db-name',
+	      }
+  	}
+	
+6.makemigrations for project using:-
+	> python3 manage.py runserver makemigrations
+7.migrate into database using:-
+	> python3 manage.py migrate
+8.see the collections into the mongodb using:-
+	>  show collections
+
+---------------------------------------------------------------------------------------------------------------------
+

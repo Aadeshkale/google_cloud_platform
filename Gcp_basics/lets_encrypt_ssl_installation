@@ -1,0 +1,25 @@
+first step download the package from below link 
+Command 1:
+	curl -s https://api.github.com/repos/xenolf/l... | grep browser_download_url | grep linux_amd64 | cut -d '"' -f 4 | wget -i - tar xf lego_v1.0.1_linux_amd64.tar.gz
+
+Command 2:
+	tar xf lego_v1.0.1_linux_amd64.tar.gz 
+	NOTE : please check downloaded package file may have different version.
+
+Command 3: it will extract lego utility for ssl certificate & key creation
+
+	sudo mv lego /usr/local/bin/lego
+
+Command 4: Important command
+	sudo lego --email="youremail@domain.com" --domains="yourdomain.com" --domains="www.yourdomain.com" --path="/etc/lego" --http run 
+
+	This will generate .crt & .key files in given path in command & folder is in-accessable for user 
+Command 5: 
+	sudo bash
+	which will let you log as root user.
+Command 6:
+	cp -r /etc/lego/certificate/* to /path/to/your/folder
+	this will give you us ssl certficate.
+
+command7: 
+	app.run(debug=True,host='0.0.0.0',port='443',ssl_context=('/home/ravi/web_login_BQ/ssl_flask.crt','/home/ravi/web_login_BQ/ssl_flask.key'))

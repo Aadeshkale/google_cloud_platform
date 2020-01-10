@@ -1,0 +1,23 @@
+Firebase -> Adding data into realtime database using api
+_________________________________________________________
+Recquired packages 
+
+1) pip3 install python-firebase
+2) pip3 install requests
+3) pip3 install json
+-----------------------------------------------------------------------------------------
+Example script
+-----------------------------------------------------------------------------------------
+
+from firebase import firebase
+import requests
+import json
+firebase=firebase.FirebaseApplication("https://soy-transducer-234305.firebaseio.com")
+data={}
+data['name']=input('Enter your name:')
+data['address']=input('Enter your address:')
+result = firebase.post('/sample',data) 
+print(result)
+
+-----------------------------------------------------------------------------------------
+

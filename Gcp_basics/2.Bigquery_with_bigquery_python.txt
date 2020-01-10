@@ -1,0 +1,50 @@
+1) set up service account for to access bigquery with appropriate permissions
+2) download json key 
+2) install bigquery-python package
+3) install oauth2 package
+4) reference site:-https://github.com/tylertreat/BigQuery-Python 
+**note :- if you go for Standrad SQL query set, use use_legacy_sql=False parameter while executing query 
+
+_______________________________________________________________________________________________________________
+
+from bigquery import get_client
+from google.oauth2 import service_account
+project_id="soy-transducer-234305"
+service_account="bigquery@soy-transducer-234305.iam.gserviceaccount.com"
+json_key = '/home/aadesh/Downloads/test.json'
+client = get_client(json_key_file=json_key, readonly=False)
+print('Connection Success')
+
+# Accesing Biquery  data
+sel_query='SELECT * FROM sample.test LIMIT 10'
+job_id, _results =client.query(sel_query)
+results=client.get_query_rows(job_id) # it returns the result in the form of lsit of tuple
+print(type(results)) 
+print('--'*20)
+for i in results:
+    print(
+        i['seq'],i['name_first'],i['name_last'],
+        i['age'],i['street'],i['city'],i['state'],
+        i['zip'],i['dollar'],i['pick'],i['date']
+    )
+print('--'*50)    
+# inserting data into bigquery table
+ins_query="INSERT INTO sample.info(name,number) VALUES ('SHivam',9854)"
+job_id=client.query(ins_query,use_legacy_sql=False)
+print('Data inserted successfully')
+
+# Deleting data from BigQuery
+del_query='DELETE sample.test WHERE seq = 6628'
+job_id,_results=client.query(del_query,use_legacy_sql=False)
+print('Row Deleted Successfully')
+
+# Updating data for BigQuery
+upt_query="""
+	UPDATE sample.test 
+	SET name_first  = "Shivam"
+	WHERE seq = 2515
+"""
+job_id,_results=client.query(del_query,use_legacy_sql=False)
+print('data updated successfully ')
+
+  

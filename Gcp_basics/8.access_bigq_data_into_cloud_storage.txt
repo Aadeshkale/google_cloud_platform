@@ -1,0 +1,44 @@
+Access bigquey data into cloud storage
+______________________________________
+
+reference :- https://cloud.google.com/bigquery/docs/exporting-data
+recquired packages:-
+	1) install os ( bydefault available )
+	2) install google-cloud-bigquery
+-------------------------------------------------------------------------------------------------------------------------------
+steps:-
+1) generate json key of your serveice account with Bigquery,Storage read,write permissions   
+2) set-up your GOOGLE_APPLICATION_CREDENTIALS envoinmental variable to that json key path
+	example,  
+	json_key=os.path.join(os.path.dirname(__file__),'bigq.json')
+	os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=json_key 
+-------------------------------------------------------------------------------------------------------------------------------
+example script:-
+-------------------------------------------------------------------------------------------------------------------------------
+import os
+from google.cloud import bigquery
+json_key=os.path.join(os.path.dirname(__file__),'bigq.json') # adding json key file path to OS
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"]=json_key        # setting GOOGLE_APPLICATION_CREDENTIALS envoinmental variable 
+							     # to that json key path
+client = bigquery.Client(project='roversidegaedev')          # creating bigqury-client with project
+
+bucket_name = 'sample-info'				     # cloud storage credentials like bucket_name,project_id 	
+project = 'roversidegaedev'				     # dataset_name, table_name  	
+dataset_id = 'aadesh_learning'	      # as we in same project so does not recquired to specify id's we use name insted of it
+table_id = 'info'
+
+destination_uri = 'gs://{}/{}'.format(bucket_name, 'info.csv') # creating destination uri where we write bigqury data 
+dataset_ref = client.dataset(dataset_id, project=project)      # selecting perticular dataset and table to get bigqury data       
+table_ref = dataset_ref.table(table_id)					
+extract_job = client.extract_table(                            # client.extract_table method for writing data with two parameters   
+    table_ref,						       # table_ref -> from where to get data 	
+    destination_uri,					       # destination_uri -> destination where to write data	
+) 
+extract_job.result()					       # Waits for job to complete
+
+print('Exported {}:{}.{} to {}'.format(			       # conformation message 	
+    project, dataset_id, table_id, destination_uri))
+print('done')
+
+------------------------------------------------------------------------------------------------------------------------------------
+

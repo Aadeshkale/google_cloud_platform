@@ -1,0 +1,47 @@
+Conneting Django to google firebase for basic user authentication
+_________________________________________________________________
+Required packages
+1) Django
+2) Pyrebase 
+------------------------------------------------------------------------------------------------------------------------
+Procedure:-
+1.create firebase project
+2.goto dashboard goto authentication enable your authentication method ex.gmail,facebook,github,simple email & password  
+3.create a user with email and password
+4.handle authentication in views.py as folllows  
+
+------------------------------------------------------------------------------------------------------------------------
+from django.shortcuts import render
+from django.views import View
+from django.http import HttpResponse
+from django.contrib import messages
+import pyrebase                           			# package to communicate with firebase
+										
+config = {							# All required configuration taken form google		
+    "apiKey": "AIzaSyAFmo9yxbMaiPn-u6ggTZDcfs9QVkOgToc",	# firebase dashboard
+    "authDomain": "soy-transducer-234305.firebaseapp.com",
+    "databaseURL": "https://soy-transducer-234305.firebaseio.com",
+    "projectId": "soy-transducer-234305",
+    "storageBucket": "soy-transducer-234305.appspot.com",
+    "messagingSenderId": "867472000546"
+}
+
+firebase=pyrebase.initialize_app(config)                        # initilization of app with configuration
+auth=firebase.auth()						# auth object to handle firebase authentication
+
+
+
+class IndexView(View):
+    def get(self,request):
+        return render(request,'index.html') 
+
+    def post(self,request):
+        email=request.POST['email']
+        passw=request.POST['passw']
+        try:
+            auth.sign_in_with_email_and_password(email,passw)	# firebase auth method for authentication using eamil  
+            return HttpResponse('<h1>Sigin Sucessfully :)</h1>')# and password
+        except Exception as e:
+            messages.warning(request,'Invalid Login Credentials :(')
+            return render(request,'index.html')
+------------------------------------------------------------------------------------------------------------------------

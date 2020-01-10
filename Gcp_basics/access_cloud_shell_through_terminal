@@ -1,0 +1,33 @@
+
+Accessing google compute engine vm's terminal on local machine terminal using ssh key 
+
+1) Create ssh key for your linux machine by using following command 
+	> sudo ssh-keygen -t rsa -C "your_email@example.com"
+	this will generate both public and private keys
+--------------------------------------------------------------------------------------------------------------------------------
+2) Take backup of ssh keys using following command
+	> cd ~/.ssh
+	> mkdir key_backup
+	> cp id_rsa* key_backup
+--------------------------------------------------------------------------------------------------------------------------------
+3) Goto your project metadata and add your public key there example,key.pub  
+
+4) Access vm's shell using following command 
+	> sudo ssh -i ~/.ssh/id_rsa aadesh@35.239.52.40 
+	this will connect to your vm's terminal, note here aadesh@35.239.52.40 is your username and hostname
+5) Goto your working direcory
+	> cd /tmp/pycharm_project_575
+
+--------------------------------------------------------------------------------------------------------------------------------
+6) uploading local files to the vm machine by using following commands
+
+	> sudo scp -i ~/.ssh/id_rsa /home/aadesh/untitled.zip aadesh@35.239.52.40:/tmp
+	here '/home/aadesh/untitled.zip' is your local directory with filename, 'aadesh@35.239.52.40:/tmp'
+	this is your targeted remote google compute engine vm's with tmp directory    
+
+--------------------------------------------------------------------------------------------------------------------------------
+7) Download files from remote vm to local device using following commands
+	> sudo scp -i ~/.ssh/id_rsa aadesh@35.239.52.40:/home/aadesh/aadesh_projects/bigq_to_storage.zip /home/aadesh/Downloads
+	here 'aadesh@35.239.52.40:/home/aadesh/aadesh_projects/bigq_to_storage.zip' ur file location on remote host, and 
+	'/home/aadesh/Downloads' this is your local machine directory to download the files  
+--------------------------------------------------------------------------------------------------------------------------------

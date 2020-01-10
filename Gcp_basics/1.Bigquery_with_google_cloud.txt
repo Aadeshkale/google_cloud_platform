@@ -1,0 +1,52 @@
+1) set up service account for to access bigquery with appropriate permissions
+2) download json key   
+2) install google-cloud-bigquery
+3) install oauth2
+
+**note:-There is diffrence between bigquery-python and google-cloud-bigquery while executing query's
+in case of bigquery-python we have to explicitly retrive data from job_id,using get_query_rows(job_id) 
+method, in case of google-cloud-bigquery directly access data from client.query() method there is no 
+use_legacy_sql=False parameter needed while executing query's it support both Standred SQL and Legacy_sql 
+query's  
+ 
+
+____________________________________________________________________________________________________________
+
+from google.cloud import bigquery
+from google.oauth2 import service_account
+credentials = service_account.Credentials.from_service_account_file('/home/aadesh/Downloads/test.json')
+project_id = 'soy-transducer-234305'
+client = bigquery.Client(credentials=credentials,project=project_id)
+print('connection sucess')
+sel_query="SELECT * FROM sample.test LIMIT 100"
+query_job=client.query(sel_query,location="US")
+print(query_job)
+for i in query_job:
+    print(
+        i['seq'],i['name_first'],i['name_last'],
+        i['age'],i['street'],i['city'],i['state'],
+        i['zip'],i['dollar'],i['pick'],i['date']
+    )
+print('--'*50)
+
+# inserting data into bigquery table
+ins_query="INSERT INTO sample.info(name,number) VALUES ('SHivam',9854)"
+job_id=client.query(ins_query)
+print('Data inserted successfully')
+
+# Deleting data from BigQuery
+del_query='DELETE sample.test WHERE seq = 6628'
+job_id=client.query(del_query)
+print('Row Deleted Successfully')
+
+# Updating data for BigQuery
+upt_query="""
+	UPDATE sample.test 
+	SET name_first  = "Shivam"
+	WHERE seq = 2515
+"""
+job_id=client.query(del_query)
+print('data updated successfully ')
+
+_____________________________________________________________________________________________________________________  
+

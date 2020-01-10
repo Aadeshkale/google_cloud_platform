@@ -1,0 +1,12 @@
+1.Give permission for google file store for app engine  
+2.make lib directory to get all required python-packages
+3.install all required packages into lib directory
+    pip install -t /lib <package_name> -> for single package 
+    pip install -t lib -r requirements.txt -> for requrinments.txt
+3.make main.py and make neccessary settings for it 
+4.make app.yaml file and specify ->runtime,labries,headers..etc
+5.open google sql connection 
+6.make migrations,migrate 
+7.deploy app using ->gcloud deploy app
+8.check for logs for errors   
+
