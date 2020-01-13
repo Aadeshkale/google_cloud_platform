@@ -18,12 +18,8 @@ from django.contrib import messages
 import pyrebase                           			# package to communicate with firebase
 										
 config = {							# All required configuration taken form google		
-    "apiKey": "AIzaSyAFmo9yxbMaiPn-u6ggTZDcfs9QVkOgToc",	# firebase dashboard
-    "authDomain": "soy-transducer-234305.firebaseapp.com",
-    "databaseURL": "https://soy-transducer-234305.firebaseio.com",
-    "projectId": "soy-transducer-234305",
-    "storageBucket": "soy-transducer-234305.appspot.com",
-    "messagingSenderId": "867472000546"
+							    	# firebase dashboard
+	# your configuration will be here 
 }
 
 firebase=pyrebase.initialize_app(config)                        # initilization of app with configuration
