@@ -1,0 +1,1 @@
+This Directory contains automation python scripts for google cloud platform,just follow sub directories and associated readme file 
