@@ -5,4 +5,5 @@ This is python script to execute CRUD operation on Cloud Firestore
 * follow fire.py for operations  
 
 https://googleapis.dev/python/firestore/latest/index.html
+
 https://firebase.google.com/docs/firestore/manage-data/add-data#python
